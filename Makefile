@@ -1,6 +1,7 @@
 install: install-deps
 
 start:
+	# npx babel-node 'src/bin/gendiff.js' before.yml after.yml
 	npx babel-node 'src/bin/gendiff.js' before.json after.json
 
 

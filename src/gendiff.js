@@ -1,17 +1,20 @@
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
 import _ from 'lodash';
+import { extname } from 'path';
+import { parseYml, parseJson } from './parsers';
 
 const result = ['{'];
 
 export default (file1, file2) => {
-  const pathToFile1 = resolve(process.cwd(), file1);
-  const pathToFile2 = resolve(process.cwd(), file2);
-  const firstFile = readFileSync(pathToFile1, 'utf8');
-  const secondFile = readFileSync(pathToFile2, 'utf8');
-  const obj1 = JSON.parse(firstFile);
-  const obj2 = JSON.parse(secondFile);
-
+  let obj1 = null;
+  let obj2 = null;
+  const format = extname(file1);
+  if (format === '.yml') {
+    obj1 = parseYml(file1);
+    obj2 = parseYml(file2);
+  } else if (format === '.json') {
+    obj1 = parseJson(file1);
+    obj2 = parseJson(file2);
+  }
   const keys = Object.keys(obj1);
   keys.push(Object.keys(obj2));
 
