@@ -1,11 +1,10 @@
-import program from 'commander';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import _ from 'lodash';
 
-const result = [];
+const result = ['{'];
 
-const gendiff = (file1, file2) => {
+export default (file1, file2) => {
   const pathToFile1 = resolve(process.cwd(), file1);
   const pathToFile2 = resolve(process.cwd(), file2);
   const firstFile = readFileSync(pathToFile1, 'utf8');
@@ -17,9 +16,11 @@ const gendiff = (file1, file2) => {
   keys.push(Object.keys(obj2));
 
   const allKeys = _.flatten(keys);
-  const x = (obj) => {
+
+  const getDiff = (obj) => {
     const iter = (object, acc) => {
       if (acc > allKeys.length - 1) {
+        result.push('}');
         return (_.uniq(result).join('\n'));
       }
 
@@ -46,17 +47,6 @@ const gendiff = (file1, file2) => {
     };
     return iter(obj, 0);
   };
-  console.log('{');
-  console.log(x(obj1));
-  console.log('}');
+
+  return (getDiff(obj1));
 };
-
-program
-  .version('0.1.0')
-  .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format')
-  .arguments('<firstConfig> <secondConfig>')
-  .action((firstConfig, secondConfig) => gendiff(firstConfig, secondConfig))
-  .parse(process.argv);
-
-export default () => {};
