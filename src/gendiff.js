@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { extname } from 'path';
-import { parseYml, parseJson } from './parsers';
+import { parseYml, parseJson, parseIni } from './parsers';
 
 const result = ['{'];
 
@@ -14,6 +14,9 @@ export default (file1, file2) => {
   } else if (format === '.json') {
     obj1 = parseJson(file1);
     obj2 = parseJson(file2);
+  } else if (format === '.ini') {
+    obj1 = parseIni(file1);
+    obj2 = parseIni(file2);
   }
   const keys = Object.keys(obj1);
   keys.push(Object.keys(obj2));
