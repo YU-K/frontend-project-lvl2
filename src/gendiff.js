@@ -1,12 +1,14 @@
-import _ from 'lodash';
+#!/usr/bin/env node
+
 import { extname } from 'path';
+import makeAst from './ast';
+import render from './render';
 import { parseYml, parseJson, parseIni } from './parsers';
 
-const result = ['{'];
+const gendiff = (file1, file2) => {
+  let obj1;
+  let obj2;
 
-export default (file1, file2) => {
-  let obj1 = null;
-  let obj2 = null;
   const format = extname(file1);
   if (format === '.yml') {
     obj1 = parseYml(file1);
@@ -18,41 +20,15 @@ export default (file1, file2) => {
     obj1 = parseIni(file1);
     obj2 = parseIni(file2);
   }
-  const keys = Object.keys(obj1);
-  keys.push(Object.keys(obj2));
 
-  const allKeys = _.flatten(keys);
-
-  const getDiff = (obj) => {
-    const iter = (object, acc) => {
-      if (acc > allKeys.length - 1) {
-        result.push('}');
-        return (_.uniq(result).join('\n'));
-      }
-
-      const currentKey = allKeys[acc];
-
-      if (_.has(obj1, currentKey) && _.has(obj2, currentKey)) {
-        if (obj1[currentKey] === obj2[currentKey]) {
-          result.push(`    ${currentKey}: ${obj1[currentKey]}`);
-        }
-      }
-      if (_.has(obj1, currentKey) && _.has(obj2, currentKey)) {
-        if (obj1[currentKey] !== obj2[currentKey]) {
-          result.push(`  + ${currentKey}: ${obj2[currentKey]}`);
-          result.push(`  - ${currentKey}: ${obj1[currentKey]}`);
-        }
-      }
-      if (!_.has(obj1, currentKey) && _.has(obj2, currentKey)) {
-        result.push(`  + ${currentKey}: ${obj2[currentKey]}`);
-      }
-      if (_.has(obj1, currentKey) && !_.has(obj2, currentKey)) {
-        result.push(`  - ${currentKey}: ${obj1[currentKey]}`);
-      }
-      return iter(object, acc + 1);
-    };
-    return iter(obj, 0);
-  };
-
-  return (getDiff(obj1));
+  const ast = makeAst(obj1, obj2);
+  return `{\n${render(ast)}}`;
 };
+export default gendiff;
+
+// const ast = makeAst('before_r.json', 'after_r.json');
+// const ast = makeAst('before.json', 'after.json');
+// const ast = makeAst('before.yml', 'after.yml');
+// const ast = makeAst('before.ini', 'after.ini');
+
+// console.log(`{\n${render(ast)}}`);

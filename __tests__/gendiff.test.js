@@ -1,14 +1,16 @@
 
+import path from 'path';
 import gendiff from '../src/gendiff';
 import { parseYml, parseJson, parseIni } from '../src/parsers';
 
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-const json1 = `${__dirname}/../__fixtures__/before.json`;
-const json2 = `${__dirname}/../__fixtures__/after.json`;
-const yml1 = `${__dirname}/../__fixtures__/before.yml`;
-const yml2 = `${__dirname}/../__fixtures__/after.yml`;
-const ini1 = `${__dirname}/../__fixtures__/before.ini`;
-const ini2 = `${__dirname}/../__fixtures__/after.ini`;
+const json1 = getFixturePath('before.json');
+const json2 = getFixturePath('after.json');
+const yml1 = getFixturePath('before.yml');
+const yml2 = getFixturePath('after.yml');
+const ini1 = getFixturePath('before.ini');
+const ini2 = getFixturePath('after.ini');
 
 const objFromYml = parseYml(yml1);
 const objFromJson = parseJson(json1);
@@ -29,8 +31,8 @@ test('gendiff output of two ini files must be a string', () => {
 test('gendiff output of two files is correct ', () => {
   expect(gendiff(json1, json2)).toEqual(`{
     host: hexlet.io
-  + timeout: 20
   - timeout: 50
+  + timeout: 20
   - proxy: 123.234.53.22
   - follow: false
   + verbose: true

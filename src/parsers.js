@@ -6,6 +6,7 @@ import { parse } from 'ini';
 export const parseYml = (filename) => {
   const pathToFile = resolve(process.cwd(), filename);
   const content = readFileSync(pathToFile, 'utf8');
+
   return safeLoad(content);
 };
 
