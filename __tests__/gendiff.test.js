@@ -16,20 +16,23 @@ const objFromYml = parseYml(yml1);
 const objFromJson = parseJson(json1);
 const objFromIni = parseIni(ini1);
 
+const jsonRecursive1 = getFixturePath('before_r.json');
+const jsonRecursive2 = getFixturePath('after_r.json');
+
 test('gendiff output of two json files must be a string', () => {
-  expect(typeof gendiff(json1, json2)).toBe('string');
+  expect(typeof gendiff(json1, json2, 'tree')).toBe('string');
 });
 
 test('gendiff output of two yaml files must be a string', () => {
-  expect(typeof gendiff(yml1, yml2)).toBe('string');
+  expect(typeof gendiff(yml1, yml2, 'tree')).toBe('string');
 });
 
 test('gendiff output of two ini files must be a string', () => {
-  expect(typeof gendiff(ini1, ini2)).toBe('string');
+  expect(typeof gendiff(ini1, ini2, 'tree')).toBe('string');
 });
 
 test('gendiff output of two files is correct ', () => {
-  expect(gendiff(json1, json2)).toEqual(`{
+  expect(gendiff(json1, json2, 'tree')).toEqual(`{
     host: hexlet.io
   - timeout: 50
   + timeout: 20
@@ -49,4 +52,10 @@ test('parseJson() returns an object', () => {
 
 test('parseIni() returns an object', () => {
   expect(objFromIni.timeout).toBe('50');
+});
+
+
+test('plain format of recursive comparison  ', () => {
+  expect(gendiff(jsonRecursive1, jsonRecursive2, 'plain'))
+    .toEqual("\nProperty 'common.setting1' was changed from Value 1 to Value 2\n");
 });
