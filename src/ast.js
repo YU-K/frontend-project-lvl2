@@ -37,6 +37,7 @@ const makeAst = (data1, data2) => {
     if (data1Value === data2Value) {
       return { key, value: data1Value, status: ' ' };
     }
+    return null;
   });
   return ast;
 };
