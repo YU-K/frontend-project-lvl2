@@ -3,6 +3,9 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/6aa2ccec25a7c9707fa5/maintainability)](https://codeclimate.com/github/YU-K/frontend-project-lvl2/maintainability)
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6aa2ccec25a7c9707fa5/test_coverage)](https://codeclimate.com/github/YU-K/frontend-project-lvl2/test_coverage)
+
+![Node.js CI](https://github.com/YU-K/frontend-project-lvl2/workflows/Node.js%20CI/badge.svg?branch=master)
+
 #### Comapre two json files 
 
 [![asciicast](https://asciinema.org/a/6VORNupTqHUvc9zTX4TKAeSlW.svg)](https://asciinema.org/a/6VORNupTqHUvc9zTX4TKAeSlW)
