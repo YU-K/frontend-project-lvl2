@@ -59,3 +59,6 @@ test('plain format of recursive comparison  ', () => {
   expect(gendiff(jsonRecursive1, jsonRecursive2, 'plain'))
     .toEqual("\nProperty 'common.setting1' was changed from Value 1 to Value 2\n");
 });
+test('json format test', () => {
+  expect(typeof gendiff(jsonRecursive1, jsonRecursive2, 'json')).toEqual('string');
+});
