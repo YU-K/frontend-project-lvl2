@@ -14,3 +14,7 @@
 [![asciicast](https://asciinema.org/a/V7Cgffhtjdo5mEivyQ8xmLMiG.svg)](https://asciinema.org/a/V7Cgffhtjdo5mEivyQ8xmLMiG)
 #### Compare two ini files
 [![asciicast](https://asciinema.org/a/F7HDC5QdJ2IAciVKmkBFV7cLU.svg)](https://asciinema.org/a/F7HDC5QdJ2IAciVKmkBFV7cLU)
+#### Recursive comparison of two files
+[![asciicast](https://asciinema.org/a/LUbapzjkCdgIQkwqa0hzXwz9W.svg)](https://asciinema.org/a/LUbapzjkCdgIQkwqa0hzXwz9W)
+#### Recursive comparison of two files in plain, tree, json formats
+[![asciicast](https://asciinema.org/a/zbLH0CnHvHMZXJ0wSUzCHkT3o.svg)](https://asciinema.org/a/zbLH0CnHvHMZXJ0wSUzCHkT3o)
