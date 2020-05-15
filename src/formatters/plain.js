@@ -32,5 +32,5 @@ export default (ast) => {
     return nodes.join('');
   };
 
-  return `\n${iter(ast, '')}`;
+  return `${iter(ast, '')}`;
 };

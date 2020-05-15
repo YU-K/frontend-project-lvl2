@@ -1,9 +1,7 @@
 install: install-deps
 
 start:
-	# npx babel-node 'src/bin/gendiff.js' -f plain before_r.json after_r.json
-	npx babel-node 'src/bin/gendiff.js' -f json before_r.ini after_r.ini
-	# npx babel-node 'src/bin/gendiff.js' before.json after.json
+	npx babel-node 'src/bin/gendiff.js' before_r.json after_r.json
 
 
 install-deps:
