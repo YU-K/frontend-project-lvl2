@@ -1,18 +1,16 @@
-import tree from './tree';
+import stylish from './stylish';
 import plain from './plain';
 import json from './json';
 
-const render = (format) => {
-  if (format === 'tree') {
-    return tree;
+export default (format) => {
+  switch (format) {
+    case 'stylish':
+      return stylish;
+    case 'plain':
+      return plain;
+    case 'json':
+      return json;
+    default:
+      throw new Error(`Unknown format: ${format}!`);
   }
-  if (format === 'plain') {
-    return plain;
-  }
-  if (format === 'json') {
-    return json;
-  }
-
-  return 'Unknown format';
 };
-export default render;

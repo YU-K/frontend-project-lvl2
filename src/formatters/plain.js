@@ -1,12 +1,15 @@
-// export default (ast) => JSON.stringify(ast, null, 2);
-// export default (ast) => JSON.stringify(ast, null, 2);
+import _ from 'lodash';
 
 export default (ast) => {
   const stringify = (node) => {
-    if (typeof node === 'object') {
+    const valuesWithoutQuotes = [true, false, null];
+    if (_.includes(valuesWithoutQuotes, node)) {
+      return `${node}`;
+    }
+    if (_.isObject(node)) {
       return '[complex value]';
     }
-    return `${node}`;
+    return `'${node}'`;
   };
 
   const iter = (tree, ancestry) => {
@@ -16,12 +19,12 @@ export default (ast) => {
       } = node;
       const newAncestry = `${ancestry}${key}`;
       if (status === 'updated') {
-        return `Property '${newAncestry}' was changed from ${stringify(before)} to ${stringify(after)}\n`;
+        return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}\n`;
       }
-      if (status === '-') {
-        return `Property '${newAncestry}' was deleted\n`;
+      if (status === 'removed') {
+        return `Property '${newAncestry}' was removed\n`;
       }
-      if (status === '+') {
+      if (status === 'added') {
         return `Property '${newAncestry}' was added with value: ${stringify(value)}\n`;
       }
       if (!children) {
@@ -32,5 +35,5 @@ export default (ast) => {
     return nodes.join('');
   };
 
-  return `${iter(ast, '')}`;
+  return `\n${iter(ast, '')}`;
 };
