@@ -30,11 +30,7 @@ const makeAst = (data1, data2) => {
         key, before: data1Value, after: data2Value, status: 'updated',
       };
     }
-
-    if (data1Value === data2Value) {
-      return { key, value: data1Value, status: 'both' };
-    }
-    return [];
+    return { key, value: data1Value, status: 'both' };
   });
   return ast;
 };

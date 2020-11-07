@@ -4,34 +4,19 @@ import { extname } from 'path';
 import { readFileSync } from 'fs';
 import makeAst from './ast';
 import getFormatter from './formatters/index';
-import { parseYml, parseJson, parseIni } from './parsers';
+import getParser from './parsers';
 
 const gendiff = (filepath1, filepath2, format) => {
-  const contentFile1 = readFileSync(filepath1);
-  const contentFile2 = readFileSync(filepath2);
+  const content1 = readFileSync(filepath1);
+  const content2 = readFileSync(filepath2);
   const fileType = extname(filepath1);
-  let parse;
+  const parse = getParser(fileType);
 
-  switch (fileType) {
-    case '.yml':
-      parse = parseYml;
-      break;
-    case '.json':
-      parse = parseJson;
-      break;
-    case '.ini':
-      parse = parseIni;
-      break;
-    default:
-      throw new Error(`Unknown file extension: ${fileType}!`);
-  }
-
-  const obj1 = parse(contentFile1);
-  const obj2 = parse(contentFile2);
+  const obj1 = parse(content1);
+  const obj2 = parse(content2);
 
   const ast = makeAst(obj1, obj2);
-  const formatter = getFormatter(format);
-  const render = () => formatter(ast);
+  const render = getFormatter(format);
   return render(ast);
 };
 export default gendiff;

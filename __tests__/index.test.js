@@ -10,14 +10,19 @@ const correctJson = readFileSync(getFixturePath('correctJson.txt'), 'utf8').trim
 
 
 describe('compare two files', () => {
-  const pathToJsonRecursFile2 = getFixturePath('after_r.json');
   const pathToJsonRecursFile1 = getFixturePath('before_r.json');
+  const pathToJsonRecursFile2 = getFixturePath('after_r.json');
+  const pathToYmlRecursFile1 = getFixturePath('before_r.yml');
+  const pathToYmlRecursFile2 = getFixturePath('after_r.yml');
 
   test.each([
     [pathToJsonRecursFile1, pathToJsonRecursFile2, correctStylish, 'stylish'],
     [pathToJsonRecursFile1, pathToJsonRecursFile2, correctPlain, 'plain'],
     [pathToJsonRecursFile1, pathToJsonRecursFile2, correctJson, 'json'],
-  ])('recursivly', (a, b, expected, format) => {
+    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctStylish, 'stylish'],
+    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctPlain, 'plain'],
+    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctJson, 'json'],
+  ])('%# recursivly  ', (a, b, expected, format) => {
     const result = gendiff(a, b, format);
     expect(result).toEqual(expected);
   });

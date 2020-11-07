@@ -1,7 +1,15 @@
 import { safeLoad } from 'js-yaml';
+import { parse as parseIni } from 'ini';
 
-import { parse } from 'ini';
-
-export const parseYml = (content) => safeLoad(content);
-export const parseJson = (content) => JSON.parse(content);
-export const parseIni = (content) => parse(content);
+export default (fileType) => {
+  switch (fileType) {
+    case '.yml':
+      return safeLoad;
+    case '.json':
+      return JSON.parse;
+    case '.ini':
+      return parseIni;
+    default:
+      throw new Error(`Unknown file extension: ${fileType}!`);
+  }
+};
