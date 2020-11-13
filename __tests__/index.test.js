@@ -4,26 +4,16 @@ import gendiff from '../src/gendiff';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-const correctPlain = readFileSync(getFixturePath('correctPlain.txt'), 'utf8');
-const correctStylish = readFileSync(getFixturePath('correctStylish.txt'), 'utf8').trim();
-const correctJson = readFileSync(getFixturePath('correctJson.txt'), 'utf8').trim();
-
-
-describe('compare two files', () => {
-  const pathToJsonRecursFile1 = getFixturePath('before_r.json');
-  const pathToJsonRecursFile2 = getFixturePath('after_r.json');
-  const pathToYmlRecursFile1 = getFixturePath('before_r.yml');
-  const pathToYmlRecursFile2 = getFixturePath('after_r.yml');
-
+describe('compare two', () => {
   test.each([
-    [pathToJsonRecursFile1, pathToJsonRecursFile2, correctStylish, 'stylish'],
-    [pathToJsonRecursFile1, pathToJsonRecursFile2, correctPlain, 'plain'],
-    [pathToJsonRecursFile1, pathToJsonRecursFile2, correctJson, 'json'],
-    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctStylish, 'stylish'],
-    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctPlain, 'plain'],
-    [pathToYmlRecursFile1, pathToYmlRecursFile2, correctJson, 'json'],
-  ])('%# recursivly  ', (a, b, expected, format) => {
-    const result = gendiff(a, b, format);
+    ['json', 'plain'],
+    ['yml', 'json'],
+    ['ini', 'stylish'],
+  ])('%s files in %s format', (fileType, format) => {
+    const filePath1 = getFixturePath(`before_r.${fileType}`);
+    const filePath2 = getFixturePath(`after_r.${fileType}`);
+    const expected = readFileSync(getFixturePath(`${format}.txt`), 'utf8');
+    const result = gendiff(filePath1, filePath2, format);
     expect(result).toEqual(expected);
   });
 });

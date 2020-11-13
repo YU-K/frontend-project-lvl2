@@ -19,13 +19,13 @@ export default (ast) => {
       } = node;
       const newAncestry = `${ancestry}${key}`;
       if (status === 'updated') {
-        return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}\n`;
+        return `\nProperty '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
       }
       if (status === 'removed') {
-        return `Property '${newAncestry}' was removed\n`;
+        return `\nProperty '${newAncestry}' was removed`;
       }
       if (status === 'added') {
-        return `Property '${newAncestry}' was added with value: ${stringify(value)}\n`;
+        return `\nProperty '${newAncestry}' was added with value: ${stringify(value)}`;
       }
       if (!children) {
         return '';
@@ -35,5 +35,5 @@ export default (ast) => {
     return nodes.join('');
   };
 
-  return `\n${iter(ast, '')}`;
+  return `${iter(ast, '')}\n`;
 };

@@ -7,8 +7,8 @@ import getFormatter from './formatters/index';
 import getParser from './parsers';
 
 const gendiff = (filepath1, filepath2, format) => {
-  const content1 = readFileSync(filepath1);
-  const content2 = readFileSync(filepath2);
+  const content1 = readFileSync(filepath1, 'utf-8');
+  const content2 = readFileSync(filepath2, 'utf-8');
   const fileType = extname(filepath1);
   const parse = getParser(fileType);
 
