@@ -9,8 +9,8 @@ import getParser from './parsers';
 const gendiff = (filepath1, filepath2, format) => {
   const content1 = readFileSync(filepath1, 'utf-8');
   const content2 = readFileSync(filepath2, 'utf-8');
-  const fileType = extname(filepath1);
-  const parse = getParser(fileType);
+  const fileExtension = extname(filepath1);
+  const parse = getParser(fileExtension);
 
   const obj1 = parse(content1);
   const obj2 = parse(content2);

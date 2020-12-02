@@ -1,8 +1,8 @@
 import { safeLoad } from 'js-yaml';
 import { parse as parseIni } from 'ini';
 
-export default (fileType) => {
-  switch (fileType) {
+export default (extension) => {
+  switch (extension) {
     case '.yml':
       return safeLoad;
     case '.json':
@@ -10,6 +10,6 @@ export default (fileType) => {
     case '.ini':
       return parseIni;
     default:
-      throw new Error(`Unknown file extension: ${fileType}!`);
+      throw new Error(`Unknown file extension: ${extension}!`);
   }
 };
