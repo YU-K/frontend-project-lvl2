@@ -14,6 +14,6 @@ describe('compare two', () => {
     const filePath2 = getFixturePath(`after_r.${fileType}`);
     const expected = readFileSync(getFixturePath(`${format}.txt`), 'utf8');
     const result = gendiff(filePath1, filePath2, format);
-    expect(result).toEqual(expected);
+    expect(result).toEqual(expected.trim());
   });
 });

@@ -45,5 +45,5 @@ export default (ast) => {
     return nodes.join('\n');
   };
 
-  return `{\n${iter(ast, 0)}\n}\n`;
+  return `{\n${iter(ast, 0)}\n}`;
 };
