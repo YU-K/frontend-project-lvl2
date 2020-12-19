@@ -15,25 +15,29 @@ export default (ast) => {
   const iter = (tree, ancestry) => {
     const nodes = tree.map((node) => {
       const {
-        key, value, status, after, before, children,
+        key, value, status, after, before, children, type,
       } = node;
+
       const newAncestry = `${ancestry}${key}`;
-      if (status === 'updated') {
-        return `\nProperty '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
-      }
-      if (status === 'removed') {
-        return `\nProperty '${newAncestry}' was removed`;
-      }
-      if (status === 'added') {
-        return `\nProperty '${newAncestry}' was added with value: ${stringify(value)}`;
-      }
-      if (!children) {
-        return '';
+
+      if (type === 'hasNoNested') {
+        switch (status) {
+          case 'updated':
+            return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
+          case 'removed':
+            return `Property '${newAncestry}' was removed`;
+          case 'added':
+            return `Property '${newAncestry}' was added with value: ${stringify(value)}`;
+          default:
+            return '';
+        }
       }
       return iter(children, `${newAncestry}.`);
+
     });
-    return nodes.join('');
+
+    return nodes.filter((str) => str !== '').join('\n');
   };
 
-  return `${iter(ast, '')}\n`;
+  return `${iter(ast, '')}`;
 };
