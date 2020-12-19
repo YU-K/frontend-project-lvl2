@@ -26,7 +26,7 @@
     "@ghostff/ini_parser": "^1.0.1",
     "@iarna/toml": "^2.2.5",
     "commander": "^4.1.1",
-    "ini": "^1.3.5",
+    "ini": "^1.3.8",
     "ini-parser-encoder": "0.0.4",
     "iniparser": "^1.0.5",
     "js-yaml": "^3.13.1",
