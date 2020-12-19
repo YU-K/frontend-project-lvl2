@@ -33,7 +33,6 @@ export default (ast) => {
         }
       }
       return iter(children, `${newAncestry}.`);
-
     });
 
     return nodes.filter((str) => str !== '').join('\n');
