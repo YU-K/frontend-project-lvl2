@@ -25,7 +25,7 @@ export default (ast) => {
         key, value, status, after, before, children, type,
       } = node;
 
-      if (type === 'hasNoNested') {
+      if (type !== 'hasNested') {
         switch (status) {
           case 'updated':
             return `  ${doIndent(depth)}- ${key}: ${stringify(before, depth)}\n  ${doIndent(depth)}+ ${key}: ${stringify(after, depth)}`;

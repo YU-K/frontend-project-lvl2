@@ -11,13 +11,13 @@ const makeAst = (data1, data2) => {
 
     if (!_.has(data1, key)) {
       return {
-        key, value: data2Value, status: 'added', type: 'hasNoNested',
+        key, value: data2Value, status: 'added',
       };
     }
 
     if (!_.has(data2, key)) {
       return {
-        key, value: data1Value, status: 'removed', type: 'hasNoNested',
+        key, value: data1Value, status: 'removed',
       };
     }
 
@@ -31,11 +31,11 @@ const makeAst = (data1, data2) => {
 
     if (data1Value !== data2Value) {
       return {
-        key, before: data1Value, after: data2Value, status: 'updated', type: 'hasNoNested',
+        key, before: data1Value, after: data2Value, status: 'updated',
       };
     }
     return {
-      key, value: data1Value, status: 'same', type: 'hasNoNested',
+      key, value: data1Value, status: 'same',
     };
   });
   return ast;

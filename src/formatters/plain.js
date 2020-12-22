@@ -20,7 +20,7 @@ export default (ast) => {
 
       const newAncestry = `${ancestry}${key}`;
 
-      if (type === 'hasNoNested') {
+      if (type !== 'hasNested') {
         switch (status) {
           case 'updated':
             return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
