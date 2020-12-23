@@ -22,6 +22,8 @@ export default (ast) => {
 
       if (type !== 'hasNested') {
         switch (status) {
+          case 'same':
+            return '';
           case 'updated':
             return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
           case 'removed':
@@ -29,7 +31,7 @@ export default (ast) => {
           case 'added':
             return `Property '${newAncestry}' was added with value: ${stringify(value)}`;
           default:
-            return '';
+            throw new Error(`Unknown status: '${status}'!`);
         }
       }
       return iter(children, `${newAncestry}.`);

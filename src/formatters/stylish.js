@@ -33,8 +33,10 @@ export default (ast) => {
             return `  ${doIndent(depth)}+ ${key}: ${stringify(value, depth)}`;
           case 'removed':
             return `  ${doIndent(depth)}- ${key}: ${stringify(value, depth)}`;
-          default:
+          case 'same':
             return `  ${doIndent(depth)}  ${key}: ${stringify(value, depth)}`;
+          default:
+            throw new Error(`Unknown status: '${status}'!`);
         }
       }
       const newDepth = depth + 2;
