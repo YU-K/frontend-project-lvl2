@@ -15,28 +15,26 @@ export default (ast) => {
   const iter = (tree, ancestry) => {
     const nodes = tree.map((node) => {
       const {
-        key, value, status, after, before, children, type,
+        key, value, after, before, children, type,
       } = node;
 
       const newAncestry = `${ancestry}${key}`;
 
-      if (type !== 'hasNested') {
-        switch (status) {
-          case 'same':
-            return '';
-          case 'updated':
-            return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
-          case 'removed':
-            return `Property '${newAncestry}' was removed`;
-          case 'added':
-            return `Property '${newAncestry}' was added with value: ${stringify(value)}`;
-          default:
-            throw new Error(`Unknown status: '${status}'!`);
-        }
+      switch (type) {
+        case 'same':
+          return '';
+        case 'updated':
+          return `Property '${newAncestry}' was updated. From ${stringify(before)} to ${stringify(after)}`;
+        case 'removed':
+          return `Property '${newAncestry}' was removed`;
+        case 'added':
+          return `Property '${newAncestry}' was added with value: ${stringify(value)}`;
+        case 'nested':
+          return iter(children, `${newAncestry}.`);
+        default:
+          throw new Error(`Unknown type: '${type}'!`);
       }
-      return iter(children, `${newAncestry}.`);
     });
-
     return nodes.filter((str) => str !== '').join('\n');
   };
 

@@ -11,13 +11,13 @@ const makeAst = (data1, data2) => {
 
     if (!_.has(data1, key)) {
       return {
-        key, value: data2Value, status: 'added',
+        key, value: data2Value, type: 'added',
       };
     }
 
     if (!_.has(data2, key)) {
       return {
-        key, value: data1Value, status: 'removed',
+        key, value: data1Value, type: 'removed',
       };
     }
 
@@ -25,17 +25,17 @@ const makeAst = (data1, data2) => {
       return {
         key,
         children: makeAst(data1Value, data2Value),
-        type: 'hasNested',
+        type: 'nested',
       };
     }
 
     if (data1Value !== data2Value) {
       return {
-        key, before: data1Value, after: data2Value, status: 'updated',
+        key, before: data1Value, after: data2Value, type: 'updated',
       };
     }
     return {
-      key, value: data1Value, status: 'same',
+      key, value: data1Value, type: 'same',
     };
   });
   return ast;

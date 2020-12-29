@@ -22,26 +22,23 @@ export default (ast) => {
   const iter = (tree, depth) => {
     const nodes = tree.map((node) => {
       const {
-        key, value, status, after, before, children, type,
+        key, value, after, before, children, type,
       } = node;
 
-      if (type !== 'hasNested') {
-        switch (status) {
-          case 'updated':
-            return `  ${doIndent(depth)}- ${key}: ${stringify(before, depth)}\n  ${doIndent(depth)}+ ${key}: ${stringify(after, depth)}`;
-          case 'added':
-            return `  ${doIndent(depth)}+ ${key}: ${stringify(value, depth)}`;
-          case 'removed':
-            return `  ${doIndent(depth)}- ${key}: ${stringify(value, depth)}`;
-          case 'same':
-            return `  ${doIndent(depth)}  ${key}: ${stringify(value, depth)}`;
-          default:
-            throw new Error(`Unknown status: '${status}'!`);
-        }
+      switch (type) {
+        case 'updated':
+          return `  ${doIndent(depth)}- ${key}: ${stringify(before, depth)}\n  ${doIndent(depth)}+ ${key}: ${stringify(after, depth)}`;
+        case 'added':
+          return `  ${doIndent(depth)}+ ${key}: ${stringify(value, depth)}`;
+        case 'removed':
+          return `  ${doIndent(depth)}- ${key}: ${stringify(value, depth)}`;
+        case 'same':
+          return `  ${doIndent(depth)}  ${key}: ${stringify(value, depth)}`;
+        case 'nested':
+          return `    ${doIndent(depth)}${key}: {\n${iter(children, depth + 2)}\n    ${doIndent(depth)}}`;
+        default:
+          throw new Error(`Unknown type: '${type}'!`);
       }
-      const newDepth = depth + 2;
-
-      return `    ${doIndent(depth)}${key}: {\n${iter(children, newDepth)}\n    ${doIndent(depth)}}`;
     });
 
     return nodes.join('\n');
